@@ -2,6 +2,7 @@ package com.pchmn.materialchips.adapter;
 
 import android.content.Context;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
@@ -43,15 +44,14 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mContext = context;
         mChipsInput = chipsInput;
         mRecycler = recycler;
-        mHintLabel = mChipsInput.getHint();
-        mEditText = mChipsInput.createEditText();
+        mHintLabel = chipsInput.getHint();
+        mEditText = chipsInput.createEditText();
         initEditText();
     }
 
     public ChipsInputEditText getEditText() {
         return mEditText;
     }
-
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -73,17 +73,18 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == TYPE_EDIT_TEXT)
             return new EditTextViewHolder(mEditText);
         else
-            return new ItemViewHolder(mChipsInput.getChipView());
+            return new ItemViewHolder(mChipsInput.createChipView());
 
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, int position) {
         // edit text
         if (position == mChipList.size()) {
             if (mChipList.size() == 0)
@@ -190,7 +191,7 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mEditText.setLayoutParams(params);
 
                 // request focus
-                mEditText.requestFocus();
+                if(mChipsInput.isAutofocusEnabled()) mEditText.requestFocus();
 
                 // remove the listener:
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -221,7 +222,7 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     int[] coord = new int[2];
                     v.getLocationInWindow(coord);
 
-                    final DetailedChipView detailedChipView = mChipsInput.getDetailedChipView(getItem(position));
+                    final DetailedChipView detailedChipView = mChipsInput.createDetailedChipView(getItem(position));
                     setDetailedChipViewPosition(detailedChipView, coord);
 
                     // delete button
