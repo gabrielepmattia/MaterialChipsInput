@@ -1,32 +1,64 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
+// Library top buildscript
 buildscript {
     repositories {
         jcenter()
-        mavenCentral()
         google()
+        mavenCentral()
+        // MaterialChipsInput
         maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-        //classpath 'me.tatarka:gradle-retrolambda:3.6.0'
+    dependencies {
+        // MaterialChipsInput
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
     }
 }
 
-allprojects {
-    repositories {
-        jcenter()
-        mavenCentral()
-        google()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+// Library buildscript
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 27
+        versionCode 9
+        versionName "1.0.8"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    testImplementation 'junit:junit:4.12'
+
+    // recycler
+    implementation 'com.android.support:recyclerview-v7:27.1.0'
+    implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
+
+    // circle image view
+    implementation 'de.hdodenhof:circleimageview:2.1.0'
+
+    // butter knife
+    implementation 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 }
+
+apply plugin: 'com.github.dcendents.android-maven'
+group = 'com.github.pchmn'
