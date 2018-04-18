@@ -133,14 +133,7 @@ public class ChipsInput extends ScrollViewMaxHeight {
             }
         }
 
-        // adapter
-        mChipsAdapter = new ChipsAdapter(mContext, this, mRecyclerView);
-        ChipsLayoutManager chipsLayoutManager = ChipsLayoutManager.newBuilder(mContext)
-                .setOrientation(ChipsLayoutManager.HORIZONTAL)
-                .build();
-        mRecyclerView.setLayoutManager(chipsLayoutManager);
-        mRecyclerView.setNestedScrollingEnabled(false);
-        mRecyclerView.setAdapter(mChipsAdapter);
+        buildAdapter();
 
         // set window callback
         // will hide DetailedOpenView and hide keyboard on touch outside
@@ -150,6 +143,21 @@ public class ChipsInput extends ScrollViewMaxHeight {
 
         android.view.Window.Callback mCallBack = (activity).getWindow().getCallback();
         activity.getWindow().setCallback(new MyWindowCallback(mCallBack, activity));
+    }
+
+    /*
+     * Helpers
+     */
+
+    private void buildAdapter() {
+        // adapter
+        mChipsAdapter = new ChipsAdapter(mContext, this, mRecyclerView);
+        ChipsLayoutManager chipsLayoutManager = ChipsLayoutManager.newBuilder(mContext)
+                .setOrientation(ChipsLayoutManager.HORIZONTAL)
+                .build();
+        mRecyclerView.setLayoutManager(chipsLayoutManager);
+        mRecyclerView.setNestedScrollingEnabled(false);
+        mRecyclerView.setAdapter(mChipsAdapter);
     }
 
     /*
@@ -199,6 +207,10 @@ public class ChipsInput extends ScrollViewMaxHeight {
 
     public void removeChipByInfo(String info) {
         mChipsAdapter.removeChipByInfo(info);
+    }
+
+    public void removeAllChips() {
+        mChipsAdapter.removeAllChips();
     }
 
     public void addChipsListener(ChipsListener chipsListener) {
@@ -393,9 +405,5 @@ public class ChipsInput extends ScrollViewMaxHeight {
     public interface ChipValidator {
         boolean areEquals(ChipInterface chip1, ChipInterface chip2);
     }
-
-    /*
-     * Validation
-     */
 
 }

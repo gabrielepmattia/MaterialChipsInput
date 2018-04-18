@@ -49,9 +49,9 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         initEditText();
     }
 
-    public ChipsInputEditText getEditText() {
-        return mEditText;
-    }
+    /*
+     * View holders
+     */
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
@@ -72,6 +72,10 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             editText = (EditText) view;
         }
     }
+
+    /*
+     * Overrides
+     */
 
     @NonNull
     @Override
@@ -107,10 +111,6 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return mChipList.size() + 1;
     }
 
-    private ChipInterface getItem(int position) {
-        return mChipList.get(position);
-    }
-
     @Override
     public int getItemViewType(int position) {
         if (position == mChipList.size())
@@ -123,6 +123,10 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public long getItemId(int position) {
         return mChipList.get(position).hashCode();
     }
+
+    /*
+     * Helpers
+     */
 
     private void initEditText() {
         mEditText.setLayoutParams(new RelativeLayout.LayoutParams(
@@ -191,7 +195,7 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 mEditText.setLayoutParams(params);
 
                 // request focus
-                if(mChipsInput.isAutofocusEnabled()) mEditText.requestFocus();
+                if (mChipsInput.isAutofocusEnabled()) mEditText.requestFocus();
 
                 // remove the listener:
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
@@ -273,6 +277,41 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         rootView.addView(detailedChipView, layoutParams);
         detailedChipView.fadeIn();
     }
+
+    private boolean listContains(List<ChipInterface> contactList, ChipInterface chip) {
+
+        if (mChipsInput.getChipValidator() != null) {
+            for (ChipInterface item : contactList) {
+                if (mChipsInput.getChipValidator().areEquals(item, chip))
+                    return true;
+            }
+        } else {
+            for (ChipInterface item : contactList) {
+                if (chip.getId() != null && chip.getId().equals(item.getId()))
+                    return true;
+                if (chip.getLabel().equals(item.getLabel()))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Getters
+     */
+
+    public ChipsInputEditText getEditText() {
+        return mEditText;
+    }
+
+    public ChipInterface getItem(int position) {
+        return mChipList.get(position);
+    }
+
+    /*
+     * Available methods
+     */
 
     public void setFilterableListView(FilterableListView filterableListView) {
         if (mEditText != null)
@@ -369,26 +408,22 @@ public class ChipsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public List<ChipInterface> getChipList() {
-        return mChipList;
+    public void removeAllChips() {
+        // notify all chips listeners
+        for (int i = 0; i < mChipList.size(); i++) {
+            ChipInterface chip = getItem(i);
+            // notify listener
+            mChipsInput.onChipRemoved(chip, 0);
+        }
+        // clear list
+        mChipList = new ArrayList<>();
+        // if 0 chip
+        mEditText.setHint(mHintLabel);
+        // refresh data
+        notifyDataSetChanged();
     }
 
-    private boolean listContains(List<ChipInterface> contactList, ChipInterface chip) {
-
-        if (mChipsInput.getChipValidator() != null) {
-            for (ChipInterface item : contactList) {
-                if (mChipsInput.getChipValidator().areEquals(item, chip))
-                    return true;
-            }
-        } else {
-            for (ChipInterface item : contactList) {
-                if (chip.getId() != null && chip.getId().equals(item.getId()))
-                    return true;
-                if (chip.getLabel().equals(item.getLabel()))
-                    return true;
-            }
-        }
-
-        return false;
+    public List<ChipInterface> getChipList() {
+        return mChipList;
     }
 }
