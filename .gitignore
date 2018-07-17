@@ -1,5 +1,5 @@
 
-# Created by https://www.gitignore.io/api/android,eclipse,androidstudio
+# Created by https://www.gitignore.io/api/macos,android,windows,androidstudio
 
 ### Android ###
 # Built application files
@@ -180,67 +180,52 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
-### Eclipse ###
+### macOS ###
+# General
+.AppleDouble
+.LSOverride
 
-.metadata
-tmp/
-*.tmp
-*.bak
-*~.nib
-.loadpath
-.recommenders
+# Icon must end with two \r
+Icon
 
-# External tool builders
-.externalToolBuilders/
+# Thumbnails
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
 
-# PyDev specific (Python IDE for Eclipse)
-*.pydevproject
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
 
-# CDT-specific (C/C++ Development Tooling)
+### Windows ###
+# Windows thumbnail cache files
+ehthumbs_vista.db
 
-# CDT- autotools
-.autotools
+# Dump file
+*.stackdump
 
-# Java annotation processor (APT)
-.factorypath
+# Folder config file
+[Dd]esktop.ini
 
-# PDT-specific (PHP Development Tools)
-.buildpath
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
 
-# sbteclipse plugin
-.target
+# Windows Installer files
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
 
-# Tern plugin
-.tern-project
-
-# TeXlipse plugin
-.texlipse
-
-# STS (Spring Tool Suite)
-.springBeans
-
-# Code Recommenders
-.recommenders/
-
-# Annotation Processing
-.apt_generated/
-
-# Scala IDE specific (Scala & Java development for Eclipse)
-.cache-main
-.scala_dependencies
-.worksheet
-
-### Eclipse Patch ###
-# Eclipse Core
-
-# JDT-specific (Eclipse Java Development Tools)
-
-# Annotation Processing
-.apt_generated
+# Windows shortcuts
+*.lnk
 
 
-# End of https://www.gitignore.io/api/android,eclipse,androidstudio
-
+# End of https://www.gitignore.io/api/macos,android,windows,androidstudio
