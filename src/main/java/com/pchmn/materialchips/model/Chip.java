@@ -1,6 +1,7 @@
 package com.pchmn.materialchips.model;
 
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ public class Chip implements ChipInterface {
     private Object id;
     private Uri avatarUri;
     private Drawable avatarDrawable;
+    private Bitmap avatarBitmap;
     private String label;
     private String info;
 
@@ -28,6 +30,13 @@ public class Chip implements ChipInterface {
         this.info = info;
     }
 
+    public Chip(@NonNull Object id, @Nullable Bitmap avatarBitmap, @NonNull String label, @Nullable String info) {
+        this.id = id;
+        this.avatarBitmap = avatarBitmap;
+        this.label = label;
+        this.info = info;
+    }
+
     public Chip(@Nullable Uri avatarUri, @NonNull String label, @Nullable String info) {
         this.avatarUri = avatarUri;
         this.label = label;
@@ -40,7 +49,14 @@ public class Chip implements ChipInterface {
         this.info = info;
     }
 
-    public Chip(@NonNull Object id, @NonNull String label, @Nullable String info) {
+    public Chip(@Nullable Bitmap avatarBitmap, @NonNull String label, @Nullable String info) {
+        this.avatarBitmap = avatarBitmap;
+        this.label = label;
+        this.info = info;
+    }
+
+    // temporary solution for removing overloading ambiguity
+    public Chip(@NonNull CharSequence id, @NonNull String label, @Nullable String info) {
         this.id = id;
         this.label = label;
         this.info = info;
@@ -64,6 +80,11 @@ public class Chip implements ChipInterface {
     @Override
     public Drawable getAvatarDrawable() {
         return avatarDrawable;
+    }
+
+    @Override
+    public Bitmap getAvatarBitmap() {
+        return avatarBitmap;
     }
 
     @Override
