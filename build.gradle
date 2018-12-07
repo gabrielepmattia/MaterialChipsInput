@@ -11,7 +11,7 @@ buildscript {
     dependencies {
         // MaterialChipsInput
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
-        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0-rc2'
     }
 }
 
@@ -28,7 +28,7 @@ android {
         versionCode 9
         versionName "1.0.8"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -41,26 +41,26 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.1.1-alpha01', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
     ext.support_lib_version = '28.0.0'
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha2'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
     testImplementation 'junit:junit:4.12'
 
     // recycler
-    implementation "com.android.support:recyclerview-v7:$support_lib_version"
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha01'
     implementation 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
 
     // circle image view
     implementation 'de.hdodenhof:circleimageview:2.1.0'
 
     // butter knife
-    implementation 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
 }
 
 apply plugin: 'com.github.dcendents.android-maven'

@@ -3,7 +3,7 @@ package com.pchmn.materialchips.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 import android.util.AttributeSet;
 
 import com.pchmn.materialchips.R;
